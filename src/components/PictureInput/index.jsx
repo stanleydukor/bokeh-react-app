@@ -5,7 +5,7 @@ import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import * as Colors from "theme/colors";
 import PictureInputStyle from "./style";
 
-export default function PictureInput({ id, labelProps, inputProps }) {
+export default function PictureInput({ id, text, labelProps, inputProps }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const handleChange = e => {
@@ -36,7 +36,7 @@ export default function PictureInput({ id, labelProps, inputProps }) {
           <label style={{ display: file ? "none" : "flex" }} htmlFor={id} {...labelProps}>
             <Flex>
               <AddIcon h="22.75px" w="17.33px" />
-              <Text ml="10px">Click here to upload profile picture</Text>
+              <Text ml="10px">{text}</Text>
             </Flex>
           </label>
           <div style={{ display: file ? "flex" : "none" }} className="file">

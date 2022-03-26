@@ -5,6 +5,7 @@ import { Button, Flex, Box, Text } from "@chakra-ui/react";
 import Lottie from "react-lottie";
 import LandingStyle from "./style";
 import animationData from "assets/lottie/main.json";
+import history from "routes/history";
 
 const Landing = () => {
   const defaultOptions = {
@@ -18,7 +19,7 @@ const Landing = () => {
   return (
     <LandingStyle>
       <Helmet>
-        <title>Blur App - Landing</title>
+        <title>Bokehian Rhapsody - Landing</title>
       </Helmet>
       <Flex flexDirection="column" alignItems="center" marginX="20px">
         <Text textAlign="center" variant="header" size="xl">
@@ -31,7 +32,13 @@ const Landing = () => {
           <Lottie options={defaultOptions} />
         </Box>
         <Flex justifyContent="flex-end">
-          <Button variant="primary" size="xl">
+          <Button
+            onClick={() => {
+              history.push("/app");
+            }}
+            variant="primary"
+            size="xl"
+          >
             Get Started
           </Button>
         </Flex>

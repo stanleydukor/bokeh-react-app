@@ -1,36 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Button, Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text } from "@chakra-ui/react";
 import PictureInput from "components/PictureInput";
-import ColorScheme from "components/ColorScheme";
 import UploadImagesStyle from "./style";
 
 const UploadImages = () => {
   return (
     <UploadImagesStyle>
       <Helmet>
-        <title>Wisha - Upload Profile Picture</title>
+        <title>Bokehian Rhapsody - Upload Images</title>
       </Helmet>
-      <Flex flexDirection="column">
-        <Text variant="header" size="xl">
-          Upload Profile Picture
-        </Text>
-        <Text size="md" mb="37px">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </Text>
-        <Box>
-          <PictureInput id="upload" />
-          <ColorScheme />
+      <Flex alignItems="center" justifyContent="center" padding="20px">
+        <Box w="521px" maxW="100%">
+          <Flex flexDirection="column">
+            <Text variant="header" size="xl">
+              Upload Images
+            </Text>
+            <Text size="sm" mt="10px" mb="37px">
+              You will need an rgb image and its equivalent depth map.
+            </Text>
+            <Box mb="30px">
+              <PictureInput id="upload-rgb" text="Click to upload rgb image" />
+            </Box>
+            <Box>
+              <PictureInput id="upload-depth" text="Click to upload depth image" />
+            </Box>
+            {/* <Flex justifyContent="flex-end" mt="47px">
+              <Button variant="ghost" size="sm">
+                Skip
+              </Button>
+              <Button variant="primary" ml="10px" size="lg">
+                Next
+              </Button>
+            </Flex> */}
+          </Flex>
         </Box>
-        <Flex justifyContent="flex-end" mt="47px">
-          <Button variant="ghost" size="sm">
-            Skip
-          </Button>
-          <Button variant="primary" ml="10px" size="lg">
-            Next
-          </Button>
-        </Flex>
       </Flex>
     </UploadImagesStyle>
   );
