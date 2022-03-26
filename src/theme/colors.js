@@ -1,5 +1,5 @@
 export const gold = {
-  100: "#F7D0AA"
+  100: "#FFCB99"
 };
 
 export const white = {

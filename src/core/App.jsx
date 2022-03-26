@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { selectors as themeSelectors } from "store/theme";
 import history from "routes/history";
 import { defaultRoute, mainRoutes } from "routes/routes-list";
-import Navbar from "components/Navbar";
 import Error from "components/Error";
 import Loading from "components/Loading";
 import Onboarding from "modules/Onboarding";
 import Main from "modules/Main";
+import GlobalStyles from "./Global";
 
 class App extends Component {
   state = {
@@ -29,10 +29,10 @@ class App extends Component {
       return <Error text="No Internet Connnection" />;
     }
     return (
-      <>
+      <div className="main-wrapper">
+        <GlobalStyles />
         <Suspense fallback={<Loading />}>
           <BrowserRouter history={history}>
-            <Navbar />
             <Switch>
               <Route path={[mainRoutes.app]} component={Main} />
               <Route path={[defaultRoute]} component={Onboarding} />
@@ -40,7 +40,7 @@ class App extends Component {
             </Switch>
           </BrowserRouter>
         </Suspense>
-      </>
+      </div>
     );
   }
 }

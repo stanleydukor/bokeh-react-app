@@ -9,7 +9,7 @@ export default function Navbar() {
     <NavbarStyle>
       <Flex h="85px" px="30px" bg="transparent" alignItems="center" justifyContent="space-between">
         <Text variant="header" size="md">
-          Wisha Birthday
+          Bokehian Rhapsody
         </Text>
         <Box>
           <IconButton
@@ -17,13 +17,13 @@ export default function Navbar() {
             onClick={toggleColorMode}
             icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
           />
-          <Button variant="secondary" ml="14px" className="no-mobile">
+          {/* <Button variant="secondary" ml="14px" className="no-mobile">
             Login
           </Button>
           <Button leftIcon={<AddIcon w="10px" h="10px" />} variant="primary" ml="14px" className="no-mobile">
             Join Wisha
           </Button>
-          <IconButton variant="secondary" ml="14px" icon={<HamburgerIcon />} className="no-web" />
+          <IconButton variant="secondary" ml="14px" icon={<HamburgerIcon />} className="no-web" /> */}
         </Box>
       </Flex>
     </NavbarStyle>

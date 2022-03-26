@@ -1,43 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Button, Flex, Box, Text, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import Field from "components/Field";
+import { Button, Flex, Box, Text } from "@chakra-ui/react";
+import Lottie from "react-lottie";
 import LandingStyle from "./style";
+import animationData from "assets/lottie/main.json";
 
 const Landing = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClick = () => setShowPassword(!showPassword);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
   return (
     <LandingStyle>
       <Helmet>
-        <title>Wisha - Landing</title>
+        <title>Blur App - Landing</title>
       </Helmet>
-      <Flex flexDirection="column">
-        <Text variant="header" size="xl">
-          Landing
+      <Flex flexDirection="column" alignItems="center" marginX="20px">
+        <Text textAlign="center" variant="header" size="xl">
+          Bokehian Rhapsody
         </Text>
-        <Text size="md" mb="37px">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <Text textAlign="center" size="md">
+          Creating amazing bokeh effects in real time.
         </Text>
-        <Box>
-          <Field type="email" placeholder="Email Address" />
-          <InputGroup>
-            <Field pr="4.5rem" type={showPassword ? "text" : "password"} placeholder="Password" />
-            <InputRightElement h="57px" width="4.5rem">
-              <IconButton
-                variant="ghost"
-                h="1.75rem"
-                onClick={handleClick}
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-              />
-            </InputRightElement>
-          </InputGroup>
+        <Box width="300px" height="300px">
+          <Lottie options={defaultOptions} />
         </Box>
-        <Flex justifyContent="flex-end" mt="47px">
+        <Flex justifyContent="flex-end">
           <Button variant="primary" size="xl">
-            Landing
+            Get Started
           </Button>
         </Flex>
       </Flex>
