@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-const UploadImagesStyle = styled.div`
-  @media only screen and (max-width: 570px) {
-    .custom-input-group {
-      flex-direction: column;
-      input {
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-  }
-`;
+const UploadImagesStyle = styled.div``;
 
 export default UploadImagesStyle;
