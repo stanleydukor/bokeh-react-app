@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Text, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Text, IconButton, CloseButton } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import * as Colors from "theme/colors";
 import PictureInputStyle from "./style";
 
@@ -47,13 +47,11 @@ export default function PictureInput({ id, text, labelProps, inputProps }) {
                     ? `${file.name}`
                     : `${file.name.slice(0, 11)}...${file.name.split(".").pop()}`)}
               </Text>
-              <IconButton
+              <CloseButton
                 ml="5px"
-                variant="ghost"
                 onClick={() => {
                   setFile(null);
                 }}
-                icon={<CloseIcon h="15px" w="15px" />}
               />
             </Flex>
           </div>
