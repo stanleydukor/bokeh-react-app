@@ -52,7 +52,7 @@ const styleConfig = {
     IconButton: {
       variants: {
         primary: {
-          bg: Colors.gold[100],
+          bg: Colors.blue[100],
           color: Colors.white[100]
         },
         secondary: {
@@ -86,7 +86,7 @@ const styleConfig = {
       },
       variants: {
         primary: {
-          bg: Colors.gold[100],
+          bg: Colors.blue[100],
           color: Colors.white[100]
         },
         secondary: {

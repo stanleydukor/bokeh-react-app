@@ -1,5 +1,5 @@
-export const gold = {
-  100: "#FFCB99"
+export const blue = {
+  100: "#27697f"
 };
 
 export const white = {
@@ -26,10 +26,6 @@ export const yellow = {
 
 export const orange = {
   100: "#FF7A00"
-};
-
-export const blue = {
-  100: "#28B2FF"
 };
 
 export const pink = {
