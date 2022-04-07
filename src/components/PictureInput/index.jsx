@@ -28,33 +28,38 @@ export default function PictureInput({ id, text, labelProps, inputProps }) {
         w="100%"
         h="100%"
         padding="18px 15px"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
       >
-        <Box h="110px" w="110px" className="profile-image">
-          {file ? <img src={preview} /> : <img src="https://via.placeholder.com/150" />}
+        <Box
+          bg={file ? "none" : useColorModeValue(Colors.white[300], Colors.black[200])}
+          h="110px"
+          w="110px"
+          className="profile-image"
+        >
+          <label htmlFor={id} {...labelProps}>
+            {file ? <img src={preview} /> : <AddIcon h="30px" w="30px" />}
+          </label>
+          {file && (
+            <CloseButton
+              className="close-button"
+              onClick={() => {
+                setFile(null);
+              }}
+            />
+          )}
         </Box>
         <Box flex="1">
-          <label style={{ display: file ? "none" : "flex" }} htmlFor={id} {...labelProps}>
-            <Flex>
-              <AddIcon h="22.75px" w="17.33px" />
-              <Text ml="10px">{text}</Text>
-            </Flex>
-          </label>
-          <div style={{ display: file ? "flex" : "none" }} className="file">
-            <Flex justifyContent="center" alignItems="center">
-              <Text>
-                {file &&
-                  (file.name.split(".")[0].length < 11
-                    ? `${file.name}`
-                    : `${file.name.slice(0, 11)}...${file.name.split(".").pop()}`)}
-              </Text>
-              <CloseButton
-                ml="5px"
-                onClick={() => {
-                  setFile(null);
-                }}
-              />
-            </Flex>
-          </div>
+          <Flex justifyContent="center" alignItems="center">
+            <Text>
+              {file
+                ? file.name.split(".")[0].length < 11
+                  ? `${file.name}`
+                  : `${file.name.slice(0, 11)}...${file.name.split(".").pop()}`
+                : text}
+            </Text>
+          </Flex>
           <input type="file" value="" onChange={handleChange} id={id} {...inputProps} />
         </Box>
       </Flex>

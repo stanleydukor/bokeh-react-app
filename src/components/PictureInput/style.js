@@ -8,26 +8,31 @@ const PictureInputStyle = styled.div`
     box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
     border-radius: 8px;
     .profile-image {
-      img {
-        object-fit: contain;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
         height: 100%;
         width: 100%;
+        cursor: pointer;
+        img {
+          object-fit: contain;
+          height: 100%;
+          width: 100%;
+        }
       }
-    }
-    label {
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-      height: 100%;
-      width: 100%;
-      cursor: pointer;
-    }
-    .file {
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-      height: 100%;
-      width: 100%;
+      .close-button {
+        position: absolute;
+        top: 0;
+        left: 100%;
+      }
     }
     input {
       display: none;
