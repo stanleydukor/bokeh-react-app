@@ -1,5 +1,6 @@
 export const blue = {
-  100: "#27697f"
+  100: "#27697f",
+  200: "#a1d2e2"
 };
 
 export const white = {

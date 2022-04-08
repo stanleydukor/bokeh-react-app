@@ -90,8 +90,8 @@ const styleConfig = {
           color: Colors.white[100]
         },
         secondary: {
-          bg: Colors.black[300],
-          color: Colors.white[300]
+          bg: "none",
+          color: Colors.blue[100]
         }
       }
     }
