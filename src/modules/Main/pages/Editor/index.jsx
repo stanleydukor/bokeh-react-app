@@ -34,6 +34,7 @@ const Editor = () => {
         </Flex>
         <Flex className="editor-pane-tools" flexDirection="column" alignItems="center" justifyContent="center">
           <SliderThumbWithTooltip text="Focal Length" />
+          <SliderThumbWithTooltip text="DoField" />
           <SliderThumbWithTooltip text="Blur Radius" />
         </Flex>
         <Flex w="100%" alignItems="center" justifyContent="space-evenly">

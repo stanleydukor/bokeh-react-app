@@ -10,7 +10,7 @@ const EditorStyle = styled.div`
     width: 100%;
   }
   .editor-pane {
-    height: 250px;
+    height: 300px;
     width: 100%;
     .editor-pane-tools {
       width: 100%;
