@@ -21,19 +21,11 @@ const UploadImages = () => {
               You will need an rgb image and its equivalent depth map.
             </Text>
             <Box mb="30px">
-              <PictureInput id="upload-rgb" text="Click to upload rgb image" />
+              <PictureInput id="rgbImageUrl" text="Click to upload rgb image" />
             </Box>
             <Box>
-              <PictureInput id="upload-depth" text="Click to upload depth image" />
+              <PictureInput id="depthImageUrl" text="Click to upload depth image" />
             </Box>
-            {/* <Flex justifyContent="flex-end" mt="47px">
-              <Button variant="ghost" size="sm">
-                Skip
-              </Button>
-              <Button variant="primary" ml="10px" size="lg">
-                Next
-              </Button>
-            </Flex> */}
           </Flex>
         </Box>
       </Flex>

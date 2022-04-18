@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { imageActions } from "store/image";
 import { Box, Flex, Text, IconButton, CloseButton } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { AddIcon } from "@chakra-ui/icons";
 import * as Colors from "theme/colors";
 import PictureInputStyle from "./style";
+import { canvasResize, cloneCanvas } from "utils/canvasUtils";
 
-export default function PictureInput({ id, text, labelProps, inputProps }) {
+const PictureInput = ({ id, text, labelProps, inputProps, handleChange }) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const handleChange = e => {
+  const onHandleChange = e => {
     setFile(e.target.files[0]);
+    handleChange(e);
+    e.target.value = null;
   };
   useEffect(() => {
     if (!file) {
@@ -18,6 +23,14 @@ export default function PictureInput({ id, text, labelProps, inputProps }) {
     }
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
+    // let image = new Image();
+    // image.src = objectUrl;
+    // image.onload = () => {
+    //   if (Math.max(image.height, image.width) > 1000) {
+    //     image = canvasResize(image);
+    //   }
+    //   initImage({ name: id, value: cloneCanvas(image) });
+    // };
     return () => URL.revokeObjectURL(objectUrl);
   }, [file]);
   return (
@@ -60,9 +73,15 @@ export default function PictureInput({ id, text, labelProps, inputProps }) {
                 : text}
             </Text>
           </Flex>
-          <input type="file" value="" onChange={handleChange} id={id} {...inputProps} />
+          <input type="file" name={id} onChange={onHandleChange} id={id} {...inputProps} />
         </Box>
       </Flex>
     </PictureInputStyle>
   );
-}
+};
+
+const mapDispatchToProps = {
+  handleChange: imageActions.handleChange
+};
+
+export default connect(null, mapDispatchToProps)(PictureInput);

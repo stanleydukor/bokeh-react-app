@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
+import { imageReducer } from "./image";
 import { themeReducer } from "./theme";
 
 const appReducer = combineReducers({
-  theme: themeReducer
+  theme: themeReducer,
+  image: imageReducer
 });
 
 const rootReducer = (state, action) => {

@@ -8,7 +8,8 @@ export const white = {
   200: "#8F8F8F",
   300: "#C9C9C9",
   400: "#757574",
-  500: "#E5E5E5"
+  500: "#E5E5E5",
+  600: "#EEEEEE"
 };
 
 export const black = {

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Flex, Box, Text, Button, IconButton } from "@chakra-ui/react";
-import { ArrowBackIcon, ArrowForwardIcon, EmailIcon } from "@chakra-ui/icons";
+import { useColorModeValue } from "@chakra-ui/color-mode";
 import { ImUndo, ImRedo } from "react-icons/im";
 import { FiCrop } from "react-icons/fi";
 import { HiAdjustments } from "react-icons/hi";
@@ -18,7 +18,7 @@ const Editor = () => {
         <title>Bokehian Rhapsody - Editor</title>
       </Helmet>
       <Flex className="image-viewer" alignItems="center" justifyContent="center" padding="20px">
-        <Box h="100%" w="100%"></Box>
+        <Box h="100%" w="100%" bgColor={useColorModeValue(Colors.white[600], Colors.black[300])}></Box>
       </Flex>
       <Flex className="editor-pane" flexDirection="column" alignItems="center" justifyContent="center" padding="20px">
         <Flex w="100%" alignItems="center" justifyContent="space-around">
