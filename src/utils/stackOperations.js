@@ -15,5 +15,5 @@ export const runRgbOperations = image => {
   let data = {
     displayRgbCanvas: cloneCanvas(displayRgbCanvas)
   };
-  storeAction.default.dispatch(imageActions.initImage(data));
+  storeAction.default.dispatch(imageActions.updateState(data));
 };

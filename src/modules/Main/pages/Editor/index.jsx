@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { selectors as imageSelectors } from "store/image";
 import { Helmet } from "react-helmet";
 import { Flex, Box, Text, Button, IconButton } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
@@ -10,15 +11,23 @@ import { RiBlurOffLine } from "react-icons/ri";
 import EditorStyle from "./style";
 import SliderThumbWithTooltip from "components/Slider";
 import * as Colors from "theme/colors";
+import ImageViewer from "components/ImageViewer";
+import history from "routes/history";
 
-const Editor = () => {
+const Editor = ({ rgbImageUrl, depthImageUrl }) => {
+  if (!rgbImageUrl || !depthImageUrl) {
+    history.push("/app/upload-images");
+    window.location.reload();
+  }
   return (
     <EditorStyle>
       <Helmet>
         <title>Bokehian Rhapsody - Editor</title>
       </Helmet>
       <Flex className="image-viewer" alignItems="center" justifyContent="center" padding="20px">
-        <Box h="100%" w="100%" bgColor={useColorModeValue(Colors.white[600], Colors.black[300])}></Box>
+        <Box h="100%" w="100%" bgColor={useColorModeValue(Colors.white[600], Colors.black[300])}>
+          <ImageViewer />
+        </Box>
       </Flex>
       <Flex className="editor-pane" flexDirection="column" alignItems="center" justifyContent="center" padding="20px">
         <Flex w="100%" alignItems="center" justifyContent="space-around">
@@ -53,8 +62,8 @@ const Editor = () => {
 };
 
 const mapStateToProps = state => ({
-  // test: testSelectors.test(state),
-  // users: testSelectors.users(state)
+  rgbImageUrl: imageSelectors.rgbImageUrl(state),
+  depthImageUrl: imageSelectors.depthImageUrl(state)
 });
 
 const mapDispatchToProps = {
