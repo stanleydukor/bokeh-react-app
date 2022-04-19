@@ -77,13 +77,14 @@ const Editor = ({ rgbImageUrl, depthImageUrl, parameters, storeParameters }) => 
             onHandleUpdate={onHandleUpdate}
           />
           <SliderThumbWithTooltip
-            text="Blur Radius"
+            text="F/Stop"
             sliderProps={{
-              name: "radius",
-              id: "radius",
-              value: tempParameters.radius,
-              min: 0,
-              max: 100
+              name: "fStop",
+              id: "fStop",
+              value: tempParameters.fStop,
+              min: 1.2,
+              max: 22,
+              step: 0.4
             }}
             onHandleChange={onHandleChange}
             onHandleUpdate={onHandleUpdate}

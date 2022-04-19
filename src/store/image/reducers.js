@@ -11,7 +11,7 @@ const initialState = {
   parameters: {
     focalLength: 1,
     DoF: 0,
-    radius: 0
+    fStop: 1.8
   },
   scaleParams: {
     ratio: 1,
