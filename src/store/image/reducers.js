@@ -8,6 +8,11 @@ const initialState = {
   mainDepthCanvas: null,
   displayRgbCanvas: null,
   prevRgbSize: { width: null, height: null },
+  parameters: {
+    focalLength: 1,
+    DoF: 0,
+    radius: 0
+  },
   scaleParams: {
     ratio: 1,
     centerShift_x: 0,
@@ -20,13 +25,6 @@ const initialState = {
     scaleMultiplier: 0.8,
     startDragOffset: {},
     mouseDown: false
-  },
-  toolsParameters: {
-    exposure: 1,
-    saturation: 1,
-    WBr: 1,
-    WBg: 1,
-    WBb: 1
   },
   operationStack: {
     rgbStack: []
@@ -114,6 +112,14 @@ export const imageReducer = (state = initialState, { type, payload }) => {
           scribbleTool: false
         }
       };
+    case types.STORE_PARAMETERS:
+      return {
+        ...state,
+        parameters: {
+          ...state.parameters,
+          ...payload
+        }
+      };
     case types.STORE_SCALE_PARAMS:
       var { name, value } = payload;
       return {
@@ -131,14 +137,7 @@ export const imageReducer = (state = initialState, { type, payload }) => {
           ...payload
         }
       };
-    case types.STORE_PARAMETERS:
-      return {
-        ...state,
-        parameters: {
-          ...state.parameters,
-          ...payload
-        }
-      };
+
     case types.ADD_OPERATION:
       var { name, value } = payload;
       var array = state.operationStack[name];

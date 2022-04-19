@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { imageActions } from "store/image";
 import { selectors as imageSelectors } from "store/image";
 import { Helmet } from "react-helmet";
 import { Flex, Box, Text, Button, IconButton } from "@chakra-ui/react";
@@ -14,7 +15,14 @@ import * as Colors from "theme/colors";
 import ImageViewer from "components/ImageViewer";
 import history from "routes/history";
 
-const Editor = ({ rgbImageUrl, depthImageUrl }) => {
+const Editor = ({ rgbImageUrl, depthImageUrl, parameters, storeParameters }) => {
+  const [tempParameters, setTempParameters] = React.useState(parameters);
+  const onHandleChange = (name, value) => {
+    setTempParameters({ ...tempParameters, [name]: value });
+  };
+  const onHandleUpdate = (name, value) => {
+    storeParameters({ [name]: value });
+  };
   if (!rgbImageUrl || !depthImageUrl) {
     history.push("/app/upload-images");
     window.location.reload();
@@ -42,9 +50,44 @@ const Editor = ({ rgbImageUrl, depthImageUrl }) => {
           </Button>
         </Flex>
         <Flex className="editor-pane-tools" flexDirection="column" alignItems="center" justifyContent="center">
-          <SliderThumbWithTooltip text="Focal Length" />
-          <SliderThumbWithTooltip text="DoField" />
-          <SliderThumbWithTooltip text="Blur Radius" />
+          <SliderThumbWithTooltip
+            text="Focal Length"
+            sliderProps={{
+              name: "focalLength",
+              id: "focalLength",
+              value: tempParameters.focalLength,
+              min: 0,
+              max: 1,
+              step: 0.1
+            }}
+            onHandleChange={onHandleChange}
+            onHandleUpdate={onHandleUpdate}
+          />
+          <SliderThumbWithTooltip
+            text="DoField"
+            sliderProps={{
+              name: "DoF",
+              id: "DoF",
+              value: tempParameters.DoF,
+              min: 0,
+              max: 1,
+              step: 0.1
+            }}
+            onHandleChange={onHandleChange}
+            onHandleUpdate={onHandleUpdate}
+          />
+          <SliderThumbWithTooltip
+            text="Blur Radius"
+            sliderProps={{
+              name: "radius",
+              id: "radius",
+              value: tempParameters.radius,
+              min: 0,
+              max: 100
+            }}
+            onHandleChange={onHandleChange}
+            onHandleUpdate={onHandleUpdate}
+          />
         </Flex>
         <Flex w="100%" alignItems="center" justifyContent="space-evenly">
           <IconButton variant="ghost" icon={<FiCrop />} />
@@ -63,11 +106,12 @@ const Editor = ({ rgbImageUrl, depthImageUrl }) => {
 
 const mapStateToProps = state => ({
   rgbImageUrl: imageSelectors.rgbImageUrl(state),
-  depthImageUrl: imageSelectors.depthImageUrl(state)
+  depthImageUrl: imageSelectors.depthImageUrl(state),
+  parameters: imageSelectors.parameters(state)
 });
 
 const mapDispatchToProps = {
-  // testActions: testActions.test,
+  storeParameters: imageActions.storeParameters
   // toggleDarkMode: themeActions.toggleDarkMode
 };
 

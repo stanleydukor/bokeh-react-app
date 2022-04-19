@@ -2,12 +2,12 @@ import { types } from "./constants";
 
 export const imageActions = {
   handleChange: e => ({ type: types.HANDLE_CHANGE, payload: e.target }),
+  storeParameters: payload => ({ type: types.STORE_PARAMETERS, payload: payload }),
   initImage: payload => ({ type: types.INIT_IMAGE, payload: payload }),
   updateState: payload => ({ type: types.UPDATE_STATE, payload: payload }),
   selectTool: payload => ({ type: types.SELECT_TOOL, payload: payload }),
   storeScaleParams: payload => ({ type: types.STORE_SCALE_PARAMS, payload: payload }),
   storeToolParameters: payload => ({ type: types.STORE_TOOL_PARAMETERS, payload: payload }),
-  storeParameters: payload => ({ type: types.STORE_PARAMETERS, payload: payload }),
   storeGroundParams: payload => ({ type: types.STORE_GROUND_PARAMS, payload: payload }),
   initLayer: () => ({ type: types.INIT_LAYER }),
   addLayer: () => ({ type: types.ADD_LAYER }),

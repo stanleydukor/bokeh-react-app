@@ -2,8 +2,8 @@ import React from "react";
 import { Flex, Box, Text, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Tooltip } from "@chakra-ui/react";
 import * as Colors from "theme/colors";
 
-export default function SliderThumbWithTooltip({ text }) {
-  const [sliderValue, setSliderValue] = React.useState(0);
+export default function SliderThumbWithTooltip({ text, sliderProps, onHandleChange, onHandleUpdate }) {
+  const [sliderValue, setSliderValue] = React.useState(sliderProps.value);
   const [showTooltip, setShowTooltip] = React.useState(false);
   return (
     <Flex my="10px" w="100%" alignItems="center">
@@ -14,11 +14,12 @@ export default function SliderThumbWithTooltip({ text }) {
       </Box>
       <Box flex="1">
         <Slider
-          id="slider"
-          defaultValue={0}
-          min={0}
-          max={100}
-          onChange={v => setSliderValue(v)}
+          {...sliderProps}
+          onChange={v => {
+            onHandleChange(sliderProps.name, v);
+            setSliderValue(v);
+          }}
+          onChangeEnd={v => onHandleUpdate(sliderProps.name, v)}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
@@ -39,7 +40,7 @@ export default function SliderThumbWithTooltip({ text }) {
       </Box>
       <Box w={["30px", "40px", "60px", "80px"]}>
         <Text textAlign="right" fontSize={["10px", "16px", "18px", "20px"]}>
-          {sliderValue}%
+          {sliderValue}
         </Text>
       </Box>
     </Flex>
