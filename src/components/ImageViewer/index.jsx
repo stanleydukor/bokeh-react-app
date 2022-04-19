@@ -80,8 +80,8 @@ class ImageViewer extends Component {
     const rgbCanvas = this.rgbImageRef.current;
     this.setState({ ...this.state, windowWidth: window.innerWidth });
     if (rgbCanvas && displayRgbCanvas) {
-      rgbCanvas.width = (window.innerWidth / 1500) * 521;
-      rgbCanvas.height = (window.innerHeight / 1200) * 352;
+      rgbCanvas.width = (window.innerWidth / 1500) * 800;
+      rgbCanvas.height = (window.innerHeight / 1200) * 500;
       const { ratio, centerShift_x, centerShift_y } = getRatio(displayRgbCanvas, rgbCanvas);
       initImage({
         prevRgbSize: { width: rgbCanvas.width, height: rgbCanvas.height }
@@ -96,8 +96,8 @@ class ImageViewer extends Component {
     return (
       <ImageViewerStyle>
         <canvas
-          width={(window.innerWidth / 1500) * 521}
-          height={(window.innerHeight / 1200) * 352}
+          width={(window.innerWidth / 1500) * 800}
+          height={(window.innerHeight / 1200) * 500}
           ref={rgbImageRef}
           onMouseDown={e => {
             storeScaleParams({
