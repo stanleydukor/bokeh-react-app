@@ -6,7 +6,6 @@ import { useColorModeValue } from "@chakra-ui/color-mode";
 import { AddIcon } from "@chakra-ui/icons";
 import * as Colors from "theme/colors";
 import PictureInputStyle from "./style";
-import { canvasResize, cloneCanvas } from "utils/canvasUtils";
 
 const PictureInput = ({ id, text, labelProps, inputProps, handleChange }) => {
   const [file, setFile] = useState(null);
@@ -23,14 +22,6 @@ const PictureInput = ({ id, text, labelProps, inputProps, handleChange }) => {
     }
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
-    // let image = new Image();
-    // image.src = objectUrl;
-    // image.onload = () => {
-    //   if (Math.max(image.height, image.width) > 1000) {
-    //     image = canvasResize(image);
-    //   }
-    //   initImage({ name: id, value: cloneCanvas(image) });
-    // };
     return () => URL.revokeObjectURL(objectUrl);
   }, [file]);
   return (
