@@ -11,6 +11,9 @@ const EditorHeader = ({ rgbImageUrl, depthImageUrl }) => {
     if (path.includes("upload-images")) {
       history.push("/app/editor");
     }
+    if (path.includes("editor")) {
+      history.push("/app/complete");
+    }
   };
   const routeLocationPrev = path => {
     if (path.includes("upload-images")) {
@@ -18,6 +21,9 @@ const EditorHeader = ({ rgbImageUrl, depthImageUrl }) => {
     }
     if (path.includes("editor")) {
       history.push("/app/upload-images");
+    }
+    if (path.includes("complete")) {
+      history.push("/app/editor");
     }
   };
   return (
@@ -30,14 +36,16 @@ const EditorHeader = ({ rgbImageUrl, depthImageUrl }) => {
           variant="primary"
           icon={<ArrowBackIcon />}
         />
-        <IconButton
-          onClick={() => {
-            routeLocationNext(history.location.pathname);
-          }}
-          disabled={history.location.pathname.includes("upload-images") && (!rgbImageUrl || !depthImageUrl)}
-          variant="primary"
-          icon={<ArrowForwardIcon />}
-        />
+        {history.location.pathname.includes("complete") ? null : (
+          <IconButton
+            onClick={() => {
+              routeLocationNext(history.location.pathname);
+            }}
+            disabled={history.location.pathname.includes("upload-images") && (!rgbImageUrl || !depthImageUrl)}
+            variant="primary"
+            icon={<ArrowForwardIcon />}
+          />
+        )}
       </Flex>
     </EditorHeaderStyle>
   );
