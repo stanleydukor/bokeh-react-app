@@ -141,6 +141,10 @@ export const drawCanvasImage = (image, context) => {
   context.drawImage(image, 0, 0);
 };
 
+export const drawNewCanvasImage = (image, context, canvas) => {
+  context.drawImage(canvas, 0, 0);
+};
+
 export const drawScaledCanvasImage = (image, canvas, ratio, centerShift_x, centerShift_y, scale, translatePos) => {
   let context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);

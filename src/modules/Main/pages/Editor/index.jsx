@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { djangoActions } from "store/django";
 import { imageActions } from "store/image";
+import { selectors as djangoSelectors } from "store/django";
 import { selectors as imageSelectors } from "store/image";
 import { Helmet } from "react-helmet";
 import { Flex, Box, Text, Button, IconButton } from "@chakra-ui/react";
@@ -14,15 +16,50 @@ import SliderThumbWithTooltip from "components/Slider";
 import * as Colors from "theme/colors";
 import ImageViewer from "components/ImageViewer";
 import history from "routes/history";
+import { cloneCanvas, drawNewCanvasImage } from "utils/canvasUtils";
 
-const Editor = ({ rgbImageUrl, depthImageUrl, parameters, storeParameters }) => {
-  const [tempParameters, setTempParameters] = React.useState(parameters);
+function arrayBufferToBase64(buffer) {
+  var binary = "";
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
+const Editor = ({
+  blurredImage,
+  rgbImageUrl,
+  depthImageUrl,
+  mainRgbCanvas,
+  mainDepthCanvas,
+  parameters,
+  storeParameters,
+  addEffect,
+  applyBlur
+}) => {
+  const [isImageNew, setIsImageNew] = useState(true);
+  const [tempParameters, setTempParameters] = useState(parameters);
   const onHandleChange = (name, value) => {
     setTempParameters({ ...tempParameters, [name]: value });
   };
   const onHandleUpdate = (name, value) => {
     storeParameters({ [name]: value });
   };
+  useEffect(() => {
+    if (blurredImage) {
+      setIsImageNew(false);
+      let image = new Image();
+      image.src = "data:image/png;base64," + arrayBufferToBase64(blurredImage);
+      image.onload = () => {
+        addEffect({
+          func: drawNewCanvasImage,
+          params: [cloneCanvas(image)]
+        });
+      };
+    }
+  }, [blurredImage]);
   if (!rgbImageUrl || !depthImageUrl) {
     history.push("/app/upload-images");
     window.location.reload();
@@ -96,7 +133,22 @@ const Editor = ({ rgbImageUrl, depthImageUrl, parameters, storeParameters }) => 
           <IconButton variant="ghost" icon={<RiBlurOffLine />} />
         </Flex>
         <Flex my="15px" w="100%" alignItems="center" justifyContent="center">
-          <Button w="60%" variant="primary" size="md">
+          <Button
+            onClick={() => {
+              let { focalLength, DoF, fStop } = parameters;
+              let formData = new FormData();
+              formData.append("rgb_image", canvasToImage(mainRgbCanvas));
+              formData.append("depth_image", canvasToImage(mainDepthCanvas));
+              formData.append("focal_length", focalLength);
+              formData.append("dof", DoF);
+              formData.append("f_stop", fStop);
+              formData.append("is_image_new", isImageNew);
+              applyBlur(formData);
+            }}
+            w="60%"
+            variant="primary"
+            size="md"
+          >
             Apply
           </Button>
         </Flex>
@@ -106,14 +158,18 @@ const Editor = ({ rgbImageUrl, depthImageUrl, parameters, storeParameters }) => 
 };
 
 const mapStateToProps = state => ({
+  blurredImage: djangoSelectors.blurredImage(state),
   rgbImageUrl: imageSelectors.rgbImageUrl(state),
   depthImageUrl: imageSelectors.depthImageUrl(state),
+  mainRgbCanvas: imageSelectors.mainRgbCanvas(state),
+  mainDepthCanvas: imageSelectors.mainDepthCanvas(state),
   parameters: imageSelectors.parameters(state)
 });
 
 const mapDispatchToProps = {
-  storeParameters: imageActions.storeParameters
-  // toggleDarkMode: themeActions.toggleDarkMode
+  storeParameters: imageActions.storeParameters,
+  addEffect: imageActions.addEffect,
+  applyBlur: djangoActions.applyBlur
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);
