@@ -8,7 +8,6 @@ import { Helmet } from "react-helmet";
 import { Flex, Box, Text, Button, IconButton } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { ImUndo, ImRedo } from "react-icons/im";
-import { FiCrop } from "react-icons/fi";
 import { HiAdjustments } from "react-icons/hi";
 import { RiBlurOffLine } from "react-icons/ri";
 import EditorStyle from "./style";
@@ -135,9 +134,8 @@ const Editor = ({
           />
         </Flex>
         <Flex w="100%" alignItems="center" justifyContent="space-evenly">
-          <IconButton variant="ghost" icon={<FiCrop />} />
-          <IconButton color={Colors.blue[100]} variant="ghost" icon={<HiAdjustments />} />
-          <IconButton variant="ghost" icon={<RiBlurOffLine />} />
+          <IconButton variant="ghost" icon={<HiAdjustments />} />
+          <IconButton color={Colors.blue[100]} variant="ghost" icon={<RiBlurOffLine />} />
         </Flex>
         <Flex my="15px" w="100%" alignItems="center" justifyContent="center">
           <Button

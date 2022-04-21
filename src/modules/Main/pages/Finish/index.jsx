@@ -1,65 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { djangoActions } from "store/django";
-import { imageActions } from "store/image";
-import { selectors as djangoSelectors } from "store/django";
 import { selectors as imageSelectors } from "store/image";
 import { Helmet } from "react-helmet";
-import { Flex, Box, Text, Button, IconButton } from "@chakra-ui/react";
+import { Flex, Box, Text, Button } from "@chakra-ui/react";
 import { BsCheckCircle } from "react-icons/bs";
 import FinishStyle from "./style";
 import history from "routes/history";
-import { canvasToImage, cloneCanvas, downloadCanvas, drawNewCanvasImage } from "utils/canvasUtils";
+import { canvasToImage, downloadCanvas } from "utils/canvasUtils";
 
-function arrayBufferToBase64(buffer) {
-  var binary = "";
-  var bytes = new Uint8Array(buffer);
-  var len = bytes.byteLength;
-  for (var i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return window.btoa(binary);
-}
-
-const Finish = ({
-  blurredImage,
-  isLoading,
-  rgbImageUrl,
-  depthImageUrl,
-  displayRgbCanvas,
-  mainDepthCanvas,
-  parameters,
-  storeParameters,
-  addEffect,
-  applyBlur,
-  resetBlurredImage
-}) => {
-  const [isImageNew, setIsImageNew] = useState(true);
-  const [tempParameters, setTempParameters] = useState(parameters);
-  const onHandleChange = (name, value) => {
-    setTempParameters({ ...tempParameters, [name]: value });
-  };
-  const onHandleUpdate = (name, value) => {
-    storeParameters({ [name]: value });
-  };
-  useEffect(() => {
-    if (blurredImage) {
-      setIsImageNew(false);
-      let image = new Image();
-      image.src = "data:image/png;base64," + arrayBufferToBase64(blurredImage);
-      image.onload = () => {
-        addEffect({
-          func: drawNewCanvasImage,
-          params: [cloneCanvas(image)]
-        });
-      };
-    } else {
-      setIsImageNew(true);
-    }
-  }, [blurredImage]);
-  useEffect(() => {
-    resetBlurredImage();
-  }, [rgbImageUrl, depthImageUrl]);
+const Finish = ({ rgbImageUrl, depthImageUrl, displayRgbCanvas }) => {
   if (!rgbImageUrl || !depthImageUrl) {
     history.push("/app/upload-images");
     window.location.reload();
@@ -100,21 +49,9 @@ const Finish = ({
 };
 
 const mapStateToProps = state => ({
-  blurredImage: djangoSelectors.blurredImage(state),
-  isLoading: djangoSelectors.isLoading(state),
   rgbImageUrl: imageSelectors.rgbImageUrl(state),
   depthImageUrl: imageSelectors.depthImageUrl(state),
-  mainRgbCanvas: imageSelectors.mainRgbCanvas(state),
-  displayRgbCanvas: imageSelectors.displayRgbCanvas(state),
-  mainDepthCanvas: imageSelectors.mainDepthCanvas(state),
-  parameters: imageSelectors.parameters(state)
+  displayRgbCanvas: imageSelectors.displayRgbCanvas(state)
 });
 
-const mapDispatchToProps = {
-  storeParameters: imageActions.storeParameters,
-  addEffect: imageActions.addEffect,
-  applyBlur: djangoActions.applyBlur,
-  resetBlurredImage: djangoActions.resetBlurredImage
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Finish);
+export default connect(mapStateToProps, null)(Finish);

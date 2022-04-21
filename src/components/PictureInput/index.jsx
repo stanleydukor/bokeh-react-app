@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { imageActions } from "store/image";
 import { selectors as imageSelectors } from "store/image";
-import { Box, Flex, Text, IconButton, CloseButton } from "@chakra-ui/react";
+import { Box, Flex, Text, CloseButton } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { AddIcon } from "@chakra-ui/icons";
 import * as Colors from "theme/colors";

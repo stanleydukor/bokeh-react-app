@@ -1,4 +1,3 @@
-import { canvasLike, cloneCanvas } from "utils/canvasUtils";
 import { types } from "./constants";
 
 const initialState = {
@@ -75,44 +74,6 @@ export const imageReducer = (state = initialState, { type, payload }) => {
         ...state,
         [name]: value
       };
-    case types.SELECT_TOOL:
-      var prevTool = state.tools.currentTool;
-      if (prevTool === payload) {
-        return {
-          ...state,
-          tools: {
-            ...state.tools,
-            currentTool: null,
-            [payload]: false
-          },
-          groundTools: {
-            currentTool: null,
-            rectangleTool: false,
-            scribbleTool: false
-          }
-        };
-      }
-      var newTools = prevTool
-        ? {
-            ...state.tools,
-            currentTool: payload,
-            [payload]: true,
-            [prevTool]: false
-          }
-        : {
-            ...state.tools,
-            currentTool: payload,
-            [payload]: true
-          };
-      return {
-        ...state,
-        tools: newTools,
-        groundTools: {
-          currentTool: null,
-          rectangleTool: false,
-          scribbleTool: false
-        }
-      };
     case types.STORE_PARAMETERS:
       return {
         ...state,
@@ -128,45 +89,6 @@ export const imageReducer = (state = initialState, { type, payload }) => {
         scaleParams: {
           ...state.scaleParams,
           ...payload
-        }
-      };
-    case types.STORE_TOOL_PARAMETERS:
-      return {
-        ...state,
-        toolsParameters: {
-          ...state.toolsParameters,
-          ...payload
-        }
-      };
-
-    case types.ADD_OPERATION:
-      var { name, value } = payload;
-      var array = state.operationStack[name];
-      var newArray = array.filter(x => {
-        if (x.func.toString() !== value.func.toString()) {
-          return x;
-        }
-      });
-      return {
-        ...state,
-        operationStack: {
-          ...state.operationStack,
-          [name]: [...newArray, { ...value, type: "operation" }]
-        }
-      };
-    case types.REMOVE_OPERATION:
-      var { name, value } = payload;
-      var array = state.operationStack[name];
-      var newArray = array.filter(x => {
-        if (x.func.toString() !== value.toString()) {
-          return x;
-        }
-      });
-      return {
-        ...state,
-        operationStack: {
-          ...state.operationStack,
-          [name]: [...newArray]
         }
       };
     case types.ADD_EFFECT:
@@ -201,14 +123,14 @@ export const imageReducer = (state = initialState, { type, payload }) => {
         }
       };
     case types.UNDO:
-      var depthStack = state.operationStack.depthStack;
+      var rgbStack = state.operationStack.rgbStack;
       var lastEffect = -1;
-      depthStack.forEach((element, index) => {
-        if (element.type === "effect" && index !== 0) {
+      rgbStack.forEach((element, index) => {
+        if (index !== 0) {
           lastEffect = index;
         }
       });
-      var newDepthStack = depthStack.filter((x, index) => {
+      var newRgbStack = rgbStack.filter((x, index) => {
         if (index !== lastEffect) {
           return x;
         }
@@ -217,48 +139,13 @@ export const imageReducer = (state = initialState, { type, payload }) => {
         ...state,
         operationStack: {
           ...state.operationStack,
-          depthStack: [...newDepthStack]
-        }
-      };
-    case types.CLEAR:
-      var rgbStack = [state.operationStack.rgbStack[0]];
-      var depthStack = state.operationStack.depthStack.filter(x => {
-        if (x.type === "effect") {
-          return x;
-        }
-      });
-      return {
-        ...state,
-        scribbleParams: {
-          pos: { x: 0, y: 0 },
-          offset: {},
-          path: []
-        },
-        parameters: {
-          ...state.parameters,
-          croppedCanvasImage: null,
-          croppedArea: null,
-          histogramParams: {
-            pixelRange: [0, 255],
-            domain: [0, 255],
-            values: [0, 255],
-            update: [0, 255]
-          }
-        },
-        operationStack: {
-          ...state.operationStack,
-          rgbStack: [...rgbStack]
+          rgbStack: [...newRgbStack]
         }
       };
     case types.RESET:
       var rgbStack = [state.operationStack.rgbStack[0]];
       return {
         ...state,
-        scribbleParams: {
-          pos: { x: 0, y: 0 },
-          offset: {},
-          path: []
-        },
         scaleParams: {
           ...state.scaleParams,
           translatePos: {
@@ -269,17 +156,6 @@ export const imageReducer = (state = initialState, { type, payload }) => {
           scaleMultiplier: 0.8,
           startDragOffset: {},
           mouseDown: false
-        },
-        parameters: {
-          ...state.parameters,
-          croppedCanvasImage: null,
-          croppedArea: null,
-          histogramParams: {
-            pixelRange: [0, 255],
-            domain: [0, 255],
-            values: [0, 255],
-            update: [0, 255]
-          }
         },
         operationStack: {
           ...state.operationStack,

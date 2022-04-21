@@ -37,14 +37,8 @@ const UploadImages = () => {
   );
 };
 
-const mapStateToProps = state => ({
-  // test: testSelectors.test(state),
-  // users: testSelectors.users(state)
-});
+const mapStateToProps = state => ({});
 
-const mapDispatchToProps = {
-  // testActions: testActions.test,
-  // toggleDarkMode: themeActions.toggleDarkMode
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadImages);
