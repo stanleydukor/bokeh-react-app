@@ -287,9 +287,18 @@ export const imageReducer = (state = initialState, { type, payload }) => {
         }
       };
     case types.REMOVE_ITEM:
+      if (payload === "rgbImageUrl") {
+        return {
+          ...state,
+          rgbImageUrl: null,
+          mainRgbCanvas: null,
+          displayRgbCanvas: null
+        };
+      }
       return {
         ...state,
-        ...payload
+        depthImageUrl: null,
+        mainDepthCanvas: null
       };
     case types.REMOVE_ALL_ITEM:
       return {

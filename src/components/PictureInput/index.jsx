@@ -9,7 +9,16 @@ import * as Colors from "theme/colors";
 import PictureInputStyle from "./style";
 import { canvasToImage } from "utils/canvasUtils";
 
-const PictureInput = ({ id, text, labelProps, inputProps, handleChange, mainRgbCanvas, mainDepthCanvas }) => {
+const PictureInput = ({
+  id,
+  text,
+  labelProps,
+  inputProps,
+  handleChange,
+  mainRgbCanvas,
+  mainDepthCanvas,
+  removeItem
+}) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const onHandleChange = e => {
@@ -61,6 +70,7 @@ const PictureInput = ({ id, text, labelProps, inputProps, handleChange, mainRgbC
               onClick={() => {
                 setFile(null);
                 setPreview(null);
+                removeItem(id);
               }}
             />
           )}
@@ -88,7 +98,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  handleChange: imageActions.handleChange
+  handleChange: imageActions.handleChange,
+  removeItem: imageActions.removeItem
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PictureInput);
