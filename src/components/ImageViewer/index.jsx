@@ -102,8 +102,8 @@ class ImageViewer extends Component {
           onMouseDown={e => {
             storeScaleParams({
               startDragOffset: {
-                x: e.clientX - rgbScaleParams.translatePos.x,
-                y: e.clientY - rgbScaleParams.translatePos.y
+                x: e.clientX - scaleParams.translatePos.x,
+                y: e.clientY - scaleParams.translatePos.y
               },
               mouseDown: true
             });
@@ -122,8 +122,8 @@ class ImageViewer extends Component {
             if (scaleParams.mouseDown) {
               storeScaleParams({
                 translatePos: {
-                  x: e.clientX - rgbScaleParams.startDragOffset.x,
-                  y: e.clientY - rgbScaleParams.startDragOffset.y
+                  x: e.clientX - scaleParams.startDragOffset.x,
+                  y: e.clientY - scaleParams.startDragOffset.y
                 }
               });
             }
