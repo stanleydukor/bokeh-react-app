@@ -30,6 +30,7 @@ function arrayBufferToBase64(buffer) {
 
 const Editor = ({
   blurredImage,
+  isLoading,
   rgbImageUrl,
   depthImageUrl,
   mainRgbCanvas,
@@ -152,6 +153,7 @@ const Editor = ({
               formData.append("is_image_new", isImageNew);
               applyBlur(formData);
             }}
+            isLoading={isLoading}
             w="60%"
             variant="primary"
             size="md"
@@ -166,6 +168,7 @@ const Editor = ({
 
 const mapStateToProps = state => ({
   blurredImage: djangoSelectors.blurredImage(state),
+  isLoading: djangoSelectors.isLoading(state),
   rgbImageUrl: imageSelectors.rgbImageUrl(state),
   depthImageUrl: imageSelectors.depthImageUrl(state),
   mainRgbCanvas: imageSelectors.mainRgbCanvas(state),
