@@ -1,18 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
+import { imageActions } from "store/image";
 import { selectors as imageSelectors } from "store/image";
 import { Flex, IconButton } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import EditorHeaderStyle from "./style";
 import history from "routes/history";
 
-const EditorHeader = ({ rgbImageUrl, depthImageUrl }) => {
+const EditorHeader = ({ rgbImageUrl, depthImageUrl, removeAllItem }) => {
   const routeLocationNext = path => {
     if (path.includes("upload-images")) {
       history.push("/app/editor");
     }
     if (path.includes("editor")) {
       history.push("/app/complete");
+    }
+    if (path.includes("complete")) {
+      removeAllItem();
+      history.push("/app/upload-images");
     }
   };
   const routeLocationPrev = path => {
@@ -36,16 +41,14 @@ const EditorHeader = ({ rgbImageUrl, depthImageUrl }) => {
           variant="primary"
           icon={<ArrowBackIcon />}
         />
-        {history.location.pathname.includes("complete") ? null : (
-          <IconButton
-            onClick={() => {
-              routeLocationNext(history.location.pathname);
-            }}
-            disabled={history.location.pathname.includes("upload-images") && (!rgbImageUrl || !depthImageUrl)}
-            variant="primary"
-            icon={<ArrowForwardIcon />}
-          />
-        )}
+        <IconButton
+          onClick={() => {
+            routeLocationNext(history.location.pathname);
+          }}
+          disabled={history.location.pathname.includes("upload-images") && (!rgbImageUrl || !depthImageUrl)}
+          variant="primary"
+          icon={<ArrowForwardIcon />}
+        />
       </Flex>
     </EditorHeaderStyle>
   );
@@ -56,4 +59,8 @@ const mapStateToProps = state => ({
   depthImageUrl: imageSelectors.depthImageUrl(state)
 });
 
-export default connect(mapStateToProps, null)(EditorHeader);
+const mapDispatchToProps = {
+  removeAllItem: imageActions.removeAllItem
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditorHeader);
