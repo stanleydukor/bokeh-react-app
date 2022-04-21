@@ -16,7 +16,7 @@ import SliderThumbWithTooltip from "components/Slider";
 import * as Colors from "theme/colors";
 import ImageViewer from "components/ImageViewer";
 import history from "routes/history";
-import { cloneCanvas, drawNewCanvasImage } from "utils/canvasUtils";
+import { canvasToImage, cloneCanvas, drawNewCanvasImage } from "utils/canvasUtils";
 
 function arrayBufferToBase64(buffer) {
   var binary = "";
@@ -37,7 +37,8 @@ const Editor = ({
   parameters,
   storeParameters,
   addEffect,
-  applyBlur
+  applyBlur,
+  resetBlurredImage
 }) => {
   const [isImageNew, setIsImageNew] = useState(true);
   const [tempParameters, setTempParameters] = useState(parameters);
@@ -58,8 +59,13 @@ const Editor = ({
           params: [cloneCanvas(image)]
         });
       };
+    } else {
+      setIsImageNew(true);
     }
   }, [blurredImage]);
+  useEffect(() => {
+    resetBlurredImage();
+  }, [rgbImageUrl, depthImageUrl]);
   if (!rgbImageUrl || !depthImageUrl) {
     history.push("/app/upload-images");
     window.location.reload();
@@ -135,13 +141,14 @@ const Editor = ({
         <Flex my="15px" w="100%" alignItems="center" justifyContent="center">
           <Button
             onClick={() => {
-              let { focalLength, DoF, fStop } = parameters;
+              let { focalLength, DoF, fStop, shape } = parameters;
               let formData = new FormData();
               formData.append("rgb_image", canvasToImage(mainRgbCanvas));
               formData.append("depth_image", canvasToImage(mainDepthCanvas));
               formData.append("focal_length", focalLength);
               formData.append("dof", DoF);
               formData.append("f_stop", fStop);
+              formData.append("shape", shape);
               formData.append("is_image_new", isImageNew);
               applyBlur(formData);
             }}
@@ -169,7 +176,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   storeParameters: imageActions.storeParameters,
   addEffect: imageActions.addEffect,
-  applyBlur: djangoActions.applyBlur
+  applyBlur: djangoActions.applyBlur,
+  resetBlurredImage: djangoActions.resetBlurredImage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

@@ -11,7 +11,8 @@ const initialState = {
   parameters: {
     focalLength: 1,
     DoF: 0,
-    fStop: 1.8
+    fStop: 1.8,
+    shape: "disk"
   },
   scaleParams: {
     ratio: 1,

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-const ColorSchemeStyle = styled.div`
-  margin-top: 40px;
+const ApertureShapeStyle = styled.div`
   .color-scheme-container {
     box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
     border-radius: 8px;
@@ -18,4 +17,4 @@ const ColorSchemeStyle = styled.div`
   }
 `;
 
-export default ColorSchemeStyle;
+export default ApertureShapeStyle;
