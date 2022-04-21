@@ -37,6 +37,8 @@ const Editor = ({
   parameters,
   storeParameters,
   addEffect,
+  zoomIn,
+  zoomOut,
   applyBlur,
   resetBlurredImage
 }) => {
@@ -82,14 +84,14 @@ const Editor = ({
       </Flex>
       <Flex className="editor-pane" flexDirection="column" alignItems="center" justifyContent="center" padding="20px">
         <Flex w="100%" alignItems="center" justifyContent="space-around">
-          <Button fontWeight="200" fontSize={["10px", "14px"]} leftIcon={<ImUndo />} variant="ghost">
-            Undo
+          <Button onClick={zoomOut} fontWeight="200" fontSize={["10px", "14px"]} leftIcon={<ImUndo />} variant="ghost">
+            Zoom out
           </Button>
           <Text textAlign="left" fontSize={["16px", "18px", "20px"]}>
             Blur
           </Text>
-          <Button fontWeight="200" fontSize={["10px", "14px"]} rightIcon={<ImRedo />} variant="ghost">
-            Redo
+          <Button onClick={zoomIn} fontWeight="200" fontSize={["10px", "14px"]} rightIcon={<ImRedo />} variant="ghost">
+            Zoom in
           </Button>
         </Flex>
         <Flex className="editor-pane-tools" flexDirection="column" alignItems="center" justifyContent="center">
@@ -133,10 +135,6 @@ const Editor = ({
             onHandleUpdate={onHandleUpdate}
           />
         </Flex>
-        <Flex w="100%" alignItems="center" justifyContent="space-evenly">
-          <IconButton variant="ghost" icon={<HiAdjustments />} />
-          <IconButton color={Colors.blue[100]} variant="ghost" icon={<RiBlurOffLine />} />
-        </Flex>
         <Flex my="15px" w="100%" alignItems="center" justifyContent="center">
           <Button
             onClick={() => {
@@ -177,6 +175,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   storeParameters: imageActions.storeParameters,
   addEffect: imageActions.addEffect,
+  zoomIn: imageActions.zoomIn,
+  zoomOut: imageActions.zoomOut,
   applyBlur: djangoActions.applyBlur,
   resetBlurredImage: djangoActions.resetBlurredImage
 };

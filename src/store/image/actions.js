@@ -9,8 +9,6 @@ export const imageActions = {
   addEffect: payload => ({ type: types.ADD_EFFECT, payload: payload }),
   zoomIn: () => ({ type: types.ZOOM_IN }),
   zoomOut: () => ({ type: types.ZOOM_OUT }),
-  undo: () => ({ type: types.UNDO }),
-  reset: () => ({ type: types.RESET }),
   removeItem: name => ({ type: types.REMOVE_ITEM, payload: name }),
   removeAllItem: () => ({ type: types.REMOVE_ALL_ITEM })
 };

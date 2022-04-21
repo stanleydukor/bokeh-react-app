@@ -7,8 +7,6 @@ export const types = {
   ADD_EFFECT: "ADD_EFFECT",
   ZOOM_IN: "ZOOM_IN",
   ZOOM_OUT: "ZOOM_OUT",
-  UNDO: "UNDO",
-  RESET: "RESET",
   REMOVE_ITEM: "REMOVE_ITEM",
   REMOVE_ALL_ITEM: "REMOVE_ALL_ITEM"
 };

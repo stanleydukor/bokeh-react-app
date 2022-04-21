@@ -122,46 +122,6 @@ export const imageReducer = (state = initialState, { type, payload }) => {
           scale: state.scaleParams.scale * state.scaleParams.scaleMultiplier
         }
       };
-    case types.UNDO:
-      var rgbStack = state.operationStack.rgbStack;
-      var lastEffect = -1;
-      rgbStack.forEach((element, index) => {
-        if (index !== 0) {
-          lastEffect = index;
-        }
-      });
-      var newRgbStack = rgbStack.filter((x, index) => {
-        if (index !== lastEffect) {
-          return x;
-        }
-      });
-      return {
-        ...state,
-        operationStack: {
-          ...state.operationStack,
-          rgbStack: [...newRgbStack]
-        }
-      };
-    case types.RESET:
-      var rgbStack = [state.operationStack.rgbStack[0]];
-      return {
-        ...state,
-        scaleParams: {
-          ...state.scaleParams,
-          translatePos: {
-            x: 0,
-            y: 0
-          },
-          scale: 1.0,
-          scaleMultiplier: 0.8,
-          startDragOffset: {},
-          mouseDown: false
-        },
-        operationStack: {
-          ...state.operationStack,
-          rgbStack: [...rgbStack]
-        }
-      };
     case types.REMOVE_ITEM:
       if (payload === "rgbImageUrl") {
         return {
