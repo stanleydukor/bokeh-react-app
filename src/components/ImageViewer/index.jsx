@@ -107,6 +107,7 @@ class ImageViewer extends Component {
   };
   render() {
     const { rgbImageRef, parentRef } = this;
+    const { canvasWidth, canvasHeight } = this.state;
     const { scaleParams, storeScaleParams } = this.props;
     return (
       <ImageViewerStyle ref={parentRef}>
