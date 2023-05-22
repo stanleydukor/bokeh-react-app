@@ -13,10 +13,13 @@ class ImageViewer extends Component {
   constructor() {
     super();
     this.rgbImageRef = createRef();
+    this.parentRef = createRef();
   }
   state = {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
+    canvasWidth: 0,
+    canvasHeight: 0,
     initBoundingBox: null
   };
   onInitImage = (id, imageUrl) => {
@@ -32,10 +35,19 @@ class ImageViewer extends Component {
     };
   };
   componentDidMount() {
+    let { parentRef } = this;
     let { rgbImageUrl, depthImageUrl } = this.props;
     this.onInitImage("mainRgbCanvas", rgbImageUrl);
     this.onInitImage("mainDepthCanvas", depthImageUrl);
     this.handleResize();
+    if (parentRef.current) {
+      setTimeout(() => {
+        this.setState({
+          canvasWidth: parentRef.current.clientWidth,
+          canvasHeight: parentRef.current.clientHeight
+        });
+      }, 0);
+    }
     window.addEventListener("resize", this.handleResize);
   }
   componentDidUpdate(prevProps) {
@@ -75,13 +87,16 @@ class ImageViewer extends Component {
     URL.revokeObjectURL(objectUrl);
   }
   handleResize = () => {
+    const { parentRef } = this;
     const { displayRgbCanvas, scaleParams, initImage, storeScaleParams } = this.props;
     const { translatePos, scale } = scaleParams;
     const rgbCanvas = this.rgbImageRef.current;
     this.setState({ ...this.state, windowWidth: window.innerWidth });
     if (rgbCanvas && displayRgbCanvas) {
-      rgbCanvas.width = (window.innerWidth / 1500) * 800;
-      rgbCanvas.height = (window.innerHeight / 1200) * 500;
+      this.setState({
+        canvasWidth: parentRef.current.clientWidth,
+        canvasHeight: parentRef.current.clientHeight
+      });
       const { ratio, centerShift_x, centerShift_y } = getRatio(displayRgbCanvas, rgbCanvas);
       initImage({
         prevRgbSize: { width: rgbCanvas.width, height: rgbCanvas.height }
@@ -91,13 +106,13 @@ class ImageViewer extends Component {
     }
   };
   render() {
-    const { rgbImageRef } = this;
+    const { rgbImageRef, parentRef } = this;
     const { scaleParams, storeScaleParams } = this.props;
     return (
-      <ImageViewerStyle>
+      <ImageViewerStyle ref={parentRef}>
         <canvas
-          width={(window.innerWidth / 1500) * 800}
-          height={(window.innerHeight / 1200) * 500}
+          width={canvasWidth}
+          height={canvasHeight}
           ref={rgbImageRef}
           onMouseDown={e => {
             storeScaleParams({
